@@ -1,26 +1,191 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* Import your custom font */
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
+/* Custom CSS using Tailwind v4 syntax */
+@theme {
+  /* Font family */
+  --font-family-sans: "Rubik", system-ui, sans-serif;
+  
+  /* Primary color palette */
+  --color-primary-50: #ffedef;
+  --color-primary-100: #ff94a0;
+  --color-primary-200: #ff8290;
+  --color-primary-300: #ff7080;
+  --color-primary-400: #ff5e70;
+  --color-primary-500: #ff4c60;
+  --color-primary-600: #e64456;
+  --color-primary-700: #cc3d4d;
+  --color-primary-800: #b33543;
+  --color-primary-900: #992e3a;
+  
+  /* Custom breakpoints */
+  --breakpoint-xs: 475px;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* Base styles */
+@layer base {
+  html {
+    font-family: 'Rubik', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-white dark:bg-gray-900;
+    @apply text-gray-900 dark:text-gray-100;
+    @apply transition-colors duration-200;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Components layer */
+@layer components {
+  .container {
+    @apply w-full mx-auto px-4;
+  }
+  
+  @media (min-width: 640px) {
+    .container {
+      @apply max-w-screen-sm;
+    }
+  }
+  
+  @media (min-width: 768px) {
+    .container {
+      @apply max-w-screen-md;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .container {
+      @apply max-w-screen-lg;
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .container {
+      @apply max-w-screen-xl;
+    }
+  }
 }
+
+/* Utilities layer */
+@layer utilities {
+  /* Custom xs breakpoint utilities */
+  @media (min-width: theme(--breakpoint-xs)) {
+    .xs\:block { display: block; }
+    .xs\:flex { display: flex; }
+    .xs\:hidden { display: none; }
+    .xs\:grid { display: grid; }
+    .xs\:inline { display: inline; }
+    .xs\:inline-block { display: inline-block; }
+  }
+}
+
+/* Root CSS Custom Properties */
+:root {
+  /* Primary Color Palette */
+  --color-primary-50: #ffedef;
+  --color-primary-100: #ff94a0;
+  --color-primary-200: #ff8290;
+  --color-primary-300: #ff7080;
+  --color-primary-400: #ff5e70;
+  --color-primary-500: #ff4c60;
+  --color-primary-600: #e64456;
+  --color-primary-700: #cc3d4d;
+  --color-primary-800: #b33543;
+  --color-primary-900: #992e3a;
+  
+  /* Alternative Green Primary (commented out in your original config) */
+  /* --color-primary-50: #e8f9f1;
+  --color-primary-100: #77d9ab;
+  --color-primary-200: #61d29d;
+  --color-primary-300: #4acc8f;
+  --color-primary-400: #34c581;
+  --color-primary-500: #1dbf73;
+  --color-primary-600: #1aac68;
+  --color-primary-700: #17995c;
+  --color-primary-800: #148651;
+  --color-primary-900: #117345; */
+  
+  /* Indigo Overlay */
+  --color-indigo-overlay: rgba(99, 102, 241, 0.8);
+}
+
+/* Dark mode variables */
+.dark {
+  /* You can override colors for dark mode here if needed */
+}
+
+/* Base styles */
+html {
+  font-family: 'Rubik', sans-serif;
+}
+
+body {
+  @apply bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+}
+
+/* Custom Typography Styles */
+.prose {
+  @apply text-gray-700;
+}
+
+.prose a {
+  @apply text-primary-500 hover:text-primary-600;
+}
+
+.prose blockquote {
+  @apply text-gray-800 border-l-4 border-primary-500 text-xl not-italic;
+}
+
+/* Custom breakpoint utilities */
+@media (min-width: 475px) {
+  .xs\:block { display: block; }
+  .xs\:flex { display: flex; }
+  .xs\:hidden { display: none; }
+  .xs\:grid { display: grid; }
+  /* Add more xs: utilities as needed */
+}
+
+/* Primary color utility classes */
+.text-primary-50 { color: var(--color-primary-50); }
+.text-primary-100 { color: var(--color-primary-100); }
+.text-primary-200 { color: var(--color-primary-200); }
+.text-primary-300 { color: var(--color-primary-300); }
+.text-primary-400 { color: var(--color-primary-400); }
+.text-primary-500 { color: var(--color-primary-500); }
+.text-primary-600 { color: var(--color-primary-600); }
+.text-primary-700 { color: var(--color-primary-700); }
+.text-primary-800 { color: var(--color-primary-800); }
+.text-primary-900 { color: var(--color-primary-900); }
+
+.bg-primary-50 { background-color: var(--color-primary-50); }
+.bg-primary-100 { background-color: var(--color-primary-100); }
+.bg-primary-200 { background-color: var(--color-primary-200); }
+.bg-primary-300 { background-color: var(--color-primary-300); }
+.bg-primary-400 { background-color: var(--color-primary-400); }
+.bg-primary-500 { background-color: var(--color-primary-500); }
+.bg-primary-600 { background-color: var(--color-primary-600); }
+.bg-primary-700 { background-color: var(--color-primary-700); }
+.bg-primary-800 { background-color: var(--color-primary-800); }
+.bg-primary-900 { background-color: var(--color-primary-900); }
+
+.border-primary-50 { border-color: var(--color-primary-50); }
+.border-primary-100 { border-color: var(--color-primary-100); }
+.border-primary-200 { border-color: var(--color-primary-200); }
+.border-primary-300 { border-color: var(--color-primary-300); }
+.border-primary-400 { border-color: var(--color-primary-400); }
+.border-primary-500 { border-color: var(--color-primary-500); }
+.border-primary-600 { border-color: var(--color-primary-600); }
+.border-primary-700 { border-color: var(--color-primary-700); }
+.border-primary-800 { border-color: var(--color-primary-800); }
+.border-primary-900 { border-color: var(--color-primary-900); }
+
+/* Indigo overlay utility */
+.bg-indigo-overlay { background-color: var(--color-indigo-overlay); }
+
+/* Hover variants */
+.hover\:text-primary-500:hover { color: var(--color-primary-500); }
+.hover\:text-primary-600:hover { color: var(--color-primary-600); }
+.hover\:bg-primary-500:hover { background-color: var(--color-primary-500); }
+.hover\:bg-primary-600:hover { background-color: var(--color-primary-600); }
