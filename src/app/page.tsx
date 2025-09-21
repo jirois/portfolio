@@ -1,9 +1,10 @@
 import AppLayout from "./components/AppLay";
+import HeroSection from "./components/partials/HeroSection";
 
 export default function Home() {
   return (
     <AppLayout>
-      <div>Welcome to the home page</div>;
+      <HeroSection />
     </AppLayout>
   );
 }

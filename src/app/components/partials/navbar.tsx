@@ -2,7 +2,6 @@
 
 import { Theme, useTheme } from "../../hooks/use-theme";
 import { Dialog, Transition } from "@headlessui/react";
-import classNames from "classnames";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Fragment, useState } from "react";
