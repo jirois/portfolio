@@ -23,16 +23,12 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
   const [isLoading, setIsLoading] = useState(true);
 
+  console.log("ThemeProvider rendering...", { theme, isLoading }); // Debug log
+
   const toggleTheme = () => {
-    console.log("🎨 Toggling theme from:", theme);
+    console.log("Toggling theme from", theme); // Debug log
     const newTheme = theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
     setTheme(newTheme);
-
-    console.log("🎨 New theme will be:", newTheme);
-    console.log(
-      "🎨 HTML element classes before:",
-      document.documentElement.className
-    );
 
     if (newTheme === Theme.DARK) {
       document.documentElement.classList.add("dark");
@@ -40,50 +36,42 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       document.documentElement.classList.remove("dark");
     }
 
-    console.log(
-      "🎨 HTML element classes after:",
-      document.documentElement.className
-    );
-
     try {
       localStorage.setItem("theme", newTheme);
-      console.log("🎨 Theme saved to localStorage:", newTheme);
+      console.log("Theme saved to localStorage:", newTheme); // Debug log
     } catch (error) {
-      console.error("🎨 Failed to save theme to localStorage:", error);
+      console.error("Failed to save theme to localStorage:", error);
     }
   };
 
   useEffect(() => {
-    console.log("🎨 ThemeProvider useEffect running...");
+    console.log("ThemeProvider useEffect running..."); // Debug log
 
+    // Initialize theme on client side
     const initializeTheme = () => {
       try {
-        console.log("🎨 Initializing theme...");
+        console.log("Initializing theme..."); // Debug log
 
+        // Check if we're in browser
         if (typeof window === "undefined") {
-          console.log("🎨 Not in browser, skipping theme initialization");
+          console.log("Not in browser, skipping theme initialization");
           setIsLoading(false);
           return;
         }
 
         const localTheme = localStorage.getItem("theme") as Theme;
-        console.log("🎨 Local theme from storage:", localTheme);
+        console.log("Local theme from storage:", localTheme); // Debug log
 
         const systemPrefersDark = window.matchMedia(
           "(prefers-color-scheme: dark)"
         ).matches;
-        console.log("🎨 System prefers dark:", systemPrefersDark);
+        console.log("System prefers dark:", systemPrefersDark); // Debug log
 
         const initialTheme =
           localTheme || (systemPrefersDark ? Theme.DARK : Theme.LIGHT);
-        console.log("🎨 Initial theme determined:", initialTheme);
+        console.log("Initial theme determined:", initialTheme); // Debug log
 
         setTheme(initialTheme);
-
-        console.log(
-          "🎨 HTML classes before applying theme:",
-          document.documentElement.className
-        );
 
         // Apply theme class
         if (initialTheme === Theme.DARK) {
@@ -92,21 +80,17 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
           document.documentElement.classList.remove("dark");
         }
 
-        console.log(
-          "🎨 HTML classes after applying theme:",
-          document.documentElement.className
-        );
-        console.log("🎨 Theme initialization complete");
+        console.log("Theme initialization complete"); // Debug log
       } catch (error) {
-        console.error("🎨 Failed to initialize theme:", error);
+        console.error("Failed to initialize theme:", error);
         setTheme(Theme.LIGHT);
       } finally {
-        console.log("🎨 Setting isLoading to false");
+        console.log("Setting isLoading to false"); // Debug log
         setIsLoading(false);
       }
     };
 
-    // Small delay to ensure DOM is ready
+    // Add a small delay to ensure everything is ready
     const timeoutId = setTimeout(initializeTheme, 100);
 
     return () => {
@@ -124,7 +108,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       const storedTheme = localStorage.getItem("theme");
       if (!storedTheme) {
         const newTheme = e.matches ? Theme.DARK : Theme.LIGHT;
-        console.log("🎨 System theme changed to:", newTheme);
+        console.log("System theme changed to:", newTheme); // Debug log
         setTheme(newTheme);
 
         if (newTheme === Theme.DARK) {
@@ -140,7 +124,7 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
   }, []);
 
   const contextValue = { theme, toggleTheme, isLoading };
-  console.log("🎨 ThemeProvider context value:", contextValue);
+  console.log("ThemeProvider context value:", contextValue); // Debug log
 
   return (
     <ThemeContext.Provider value={contextValue}>
@@ -151,9 +135,10 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
 const useTheme = () => {
   const context = useContext(ThemeContext);
+  console.log("useTheme called, context:", context); // Debug log
 
   if (context === undefined) {
-    console.error("🎨 useTheme must be used within a ThemeProvider");
+    console.error("useTheme must be used within a ThemeProvider");
     throw new Error("useTheme must be used within a ThemeProvider");
   }
   return context;

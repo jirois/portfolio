@@ -20,13 +20,12 @@ type ThemeProviderProps = {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
+  // Start with light theme on server, update on client
   const [theme, setTheme] = useState<Theme>(Theme.LIGHT);
   const [isLoading, setIsLoading] = useState(true);
-
-  console.log("ThemeProvider rendering...", { theme, isLoading }); // Debug log
+  const [mounted, setMounted] = useState(false);
 
   const toggleTheme = () => {
-    console.log("Toggling theme from", theme); // Debug log
     const newTheme = theme === Theme.LIGHT ? Theme.DARK : Theme.LIGHT;
     setTheme(newTheme);
 
@@ -36,95 +35,45 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
       document.documentElement.classList.remove("dark");
     }
 
-    try {
-      localStorage.setItem("theme", newTheme);
-      console.log("Theme saved to localStorage:", newTheme); // Debug log
-    } catch (error) {
-      console.error("Failed to save theme to localStorage:", error);
-    }
+    localStorage.setItem("theme", newTheme);
   };
 
   useEffect(() => {
-    console.log("ThemeProvider useEffect running..."); // Debug log
+    // This only runs on the client after hydration
+    setMounted(true);
 
-    // Initialize theme on client side
-    const initializeTheme = () => {
-      try {
-        console.log("Initializing theme..."); // Debug log
+    const savedTheme = localStorage.getItem("theme") as Theme;
+    const systemPrefersDark = window.matchMedia(
+      "(prefers-color-scheme: dark)"
+    ).matches;
+    const initialTheme =
+      savedTheme || (systemPrefersDark ? Theme.DARK : Theme.LIGHT);
 
-        // Check if we're in browser
-        if (typeof window === "undefined") {
-          console.log("Not in browser, skipping theme initialization");
-          setIsLoading(false);
-          return;
-        }
+    setTheme(initialTheme);
 
-        const localTheme = localStorage.getItem("theme") as Theme;
-        console.log("Local theme from storage:", localTheme); // Debug log
+    // Apply theme class
+    if (initialTheme === Theme.DARK) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
 
-        const systemPrefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        console.log("System prefers dark:", systemPrefersDark); // Debug log
-
-        const initialTheme =
-          localTheme || (systemPrefersDark ? Theme.DARK : Theme.LIGHT);
-        console.log("Initial theme determined:", initialTheme); // Debug log
-
-        setTheme(initialTheme);
-
-        // Apply theme class
-        if (initialTheme === Theme.DARK) {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
-
-        console.log("Theme initialization complete"); // Debug log
-      } catch (error) {
-        console.error("Failed to initialize theme:", error);
-        setTheme(Theme.LIGHT);
-      } finally {
-        console.log("Setting isLoading to false"); // Debug log
-        setIsLoading(false);
-      }
-    };
-
-    // Add a small delay to ensure everything is ready
-    const timeoutId = setTimeout(initializeTheme, 100);
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
-  }, []);
-
-  // Listen for system theme changes
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      const storedTheme = localStorage.getItem("theme");
-      if (!storedTheme) {
-        const newTheme = e.matches ? Theme.DARK : Theme.LIGHT;
-        console.log("System theme changed to:", newTheme); // Debug log
-        setTheme(newTheme);
-
-        if (newTheme === Theme.DARK) {
-          document.documentElement.classList.add("dark");
-        } else {
-          document.documentElement.classList.remove("dark");
-        }
-      }
-    };
-
-    mediaQuery.addEventListener("change", handleChange);
-    return () => mediaQuery.removeEventListener("change", handleChange);
+    setIsLoading(false);
   }, []);
 
   const contextValue = { theme, toggleTheme, isLoading };
-  console.log("ThemeProvider context value:", contextValue); // Debug log
+
+  // Don't render theme-dependent content until mounted
+  if (!mounted) {
+    // Return a neutral loading state that matches server render
+    return (
+      <ThemeContext.Provider
+        value={{ theme: Theme.LIGHT, toggleTheme, isLoading: true }}
+      >
+        {children}
+      </ThemeContext.Provider>
+    );
+  }
 
   return (
     <ThemeContext.Provider value={contextValue}>
@@ -135,10 +84,8 @@ const ThemeProvider: React.FC<ThemeProviderProps> = ({ children }) => {
 
 const useTheme = () => {
   const context = useContext(ThemeContext);
-  console.log("useTheme called, context:", context); // Debug log
 
   if (context === undefined) {
-    console.error("useTheme must be used within a ThemeProvider");
     throw new Error("useTheme must be used within a ThemeProvider");
   }
   return context;
