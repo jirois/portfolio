@@ -1,12 +1,111 @@
-.experience,
-.education {
-  @apply relative;
+// styles/modules/ExperienceSection.module.scss
 
-  &-item {
-    @apply ml-7;
+.timeline {
+  position: relative;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 2.5rem;
+  margin-left: 1.5rem;
+  
+  &:last-child {
+    margin-bottom: 0;
   }
+}
 
-  &-item:not(:last-child) {
-    @apply mb-10;
+.timeline-icon {
+  position: absolute;
+  left: -30px;
+  top: -5px; // Small vertical offset for better alignment with text
+  width: 20px;
+  height: 20px;
+  z-index: 2;
+  
+  // Center the icon container
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  
+  // Ensure icons are properly displayed
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+}
+
+// Specific alignment fixes for different icons
+.briefcase-icon {
+  // Briefcase icon usually aligns well by default
+  .icon {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.academic-cap-icon {
+  // Academic cap specific adjustments
+  .icon {
+    width: 15px;
+    height: 15px;
+    // Fine-tune positioning if the SVG has internal padding
+    transform: translate(0px, -0.5px);
+    
+    svg {
+      // Remove any default margins/padding from SVG
+      margin: 0;
+      padding: 0;
+      vertical-align: baseline;
+    }
+  }
+}
+
+// Alternative: If alignment is still off, try these overrides
+.academic-cap-fix {
+  .icon {
+    // More aggressive centering
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    
+    svg {
+      width: 14px !important;
+      height: 14px !important;
+      transform: translateY(0) !important;
+    }
+  }
+}
+
+// Experience and Education specific styles
+.experience, .education {
+  position: relative;
+}
+
+.experience-item, .education-item {
+  @extend .timeline-item;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .timeline-item {
+    margin-left: 1.25rem;
+  }
+  
+  .timeline-icon {
+    width: 18px;
+    height: 18px;
+    left: -9px;
+  }
+  
+  .icon {
+    width: 12px;
+    height: 12px;
   }
 }

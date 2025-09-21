@@ -10,11 +10,13 @@ export type Experience = {
 
 export type Education = {
   school: string;
-  degree: string;
   startDate: string;
   endDate: string;
   description: string;
-};
+} & (
+  | { degree: string; certificate?: never }
+  | { certificate: string; degree?: never }
+);
 
 export type Service = {
   name: string;
