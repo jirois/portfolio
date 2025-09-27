@@ -5,6 +5,8 @@ import ExperienceSection from "./components/partials/ExperienceSection";
 import ServiceSection from "./components/partials/ServiceSection";
 import RecentWorkSection from "./components/partials/RecentWorkSection";
 import TestimonialSection from "./components/partials/TestimonialSection";
+import BlogSection from "./components/partials/BlogSection";
+import ContactSection from "./components/partials/ContactSection";
 
 export default function Home() {
   return (
@@ -23,7 +25,13 @@ export default function Home() {
         <RecentWorkSection />
       </section>
       <section className="container py-16">
-        {/* <TestimonialSection /> */}
+        <TestimonialSection />
+      </section>
+      <section className="container py-16">
+        <BlogSection />
+      </section>
+      <section className="container py-16">
+        <ContactSection />
       </section>
     </AppLayout>
   );
