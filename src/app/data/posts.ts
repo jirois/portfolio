@@ -6,7 +6,7 @@ export const posts: Post[] = [
     title: 'Scaling Web Design into a Sustainable Business',
     publishedAt: '12 Sep 2025',
     thumbnailUrl: '/images/posts/post-thumbnail-1.png',
-    imageUrl: '/images/posts/post-1.png',
+    imageUrl: '/images/posts/post-01.png',
     authorName: 'Ajiri Omas',
     content: `
       <p>
@@ -53,7 +53,7 @@ export const posts: Post[] = [
     title: 'Building Responsive Frontends with React & Tailwind',
     publishedAt: '05 Sep 2025',
     thumbnailUrl: '/images/posts/post-thumbnail-2.png',
-    imageUrl: '/images/posts/post-2.png',
+    imageUrl: '/images/posts/post-02.png',
     authorName: 'Ajiri Omas',
     content: `
       <p>

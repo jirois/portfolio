@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import React from "react";
-import Button from "../form/Button";
 import Input from "../form/Input";
 import TextArea from "../form/TextArea";
 import SectionTitle from "../shared/SectionTitle";
