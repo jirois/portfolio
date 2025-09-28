@@ -151,7 +151,7 @@ const ContactSection = () => {
               <p>omasajiri@gmail.com</p>
             </div>
           </div>
-          <div className="col-span-2">
+          <div className="items-center mt-2 md:col-span-2">
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid gap-6 md:grid-cols-2">
                 <Input

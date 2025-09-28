@@ -43,7 +43,7 @@ export const works: Work[] = [
     title: 'BizKonnect Africa',
     category: 'Web Development',
     thumbnailUrl: '/images/works/garments-management-system.png',
-    
+    description: `BizKonnect Africa is a digital platform designed to empower small and medium-sized businesses across Africa by giving them access to finance, technology tools, and advertising opportunities. At its prototype stage, the platform focuses on creating an intuitive business onboarding experience while offering multilingual support in English and Pidgin to ensure inclusivity. It integrates a marketplace for affordable digital tools, a module for promoting business visibility through ads, and a planned SaaS layer to scale operations seamlessly. The vision of BizKonnect is to close critical gaps for African entrepreneurs by combining technology with financial access, enabling businesses to grow sustainably in both local and regional markets.`,
     publishedAt: '19 April 2025',
     images: ['/images/works/work-01.png', '/images/works/work-02.png'],
     previewUrl: '',
