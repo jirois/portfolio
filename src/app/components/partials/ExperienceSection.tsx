@@ -25,35 +25,21 @@ const ExperienceSection = () => {
             }}
           >
             <ol
-              className={classNames(
-                styles["experience"],
-                "border-l",
-                styles["timeline"]
-              )}
+              className={classNames(styles["experience"], "border-l")}
               style={{
                 borderColor: theme === "dark" ? "#6b7280" : "#e5e7eb",
               }}
             >
               {experiences.map((experience, index) => (
-                <li
-                  key={index}
-                  className={classNames(
-                    styles["experience-item"],
-                    styles["timeline-item"]
-                  )}
-                >
+                <li key={index} className={styles["experience-item"]}>
                   <span
-                    className={classNames(
-                      styles["timeline-icon"],
-                      styles["briefcase-icon"],
-                      "absolute flex items-center justify-center rounded-full ring-8"
-                    )}
+                    className="absolute -left-8.5 flex h-5 w-5 items-center justify-center"
                     style={{
                       backgroundColor: theme === "dark" ? "#374151" : "#ffffff",
                       color: "#ff4c60",
                     }}
                   >
-                    <FiBriefcase className={styles["icon"]} />
+                    <FiBriefcase className="h-5" />
                   </span>
                   <time
                     className="mb-2 block text-sm font-normal leading-none"
@@ -80,7 +66,7 @@ const ExperienceSection = () => {
                     {experience.company}
                   </p>
                   <p
-                    className="mb-4 text-base font-normal"
+                    className="mb-4 text-base font-normal "
                     style={{
                       color: theme === "dark" ? "#f3f4f6" : "#6b7280",
                     }}
@@ -95,41 +81,27 @@ const ExperienceSection = () => {
         {/* Education */}
         <div>
           <div
-            className="rounded-2xl px-10 py-8 shadow-lg"
+            className="rounded-2xl bg-white px-10 py-8 shadow-lg "
             style={{
               backgroundColor: theme === "dark" ? "#374151" : "#ffffff",
             }}
           >
             <ol
-              className={classNames(
-                styles["education"],
-                "border-l",
-                styles["timeline"]
-              )}
+              className={classNames(styles["education"], "border-l ")}
               style={{
                 borderColor: theme === "dark" ? "#6b7280" : "#e5e7eb",
               }}
             >
               {educations.map((education, index) => (
-                <li
-                  key={index}
-                  className={classNames(
-                    styles["education-item"],
-                    styles["timeline-item"]
-                  )}
-                >
+                <li key={index} className={styles["education-item"]}>
                   <span
-                    className={classNames(
-                      styles["timeline-icon"],
-                      styles["academic-cap-icon"],
-                      "absolute flex items-center justify-center rounded-full ring-8"
-                    )}
+                    className="absolute -left-8.5 flex h-5 w-5 items-center justify-center"
                     style={{
                       backgroundColor: theme === "dark" ? "#374151" : "#ffffff",
                       color: "#ff4c60",
                     }}
                   >
-                    <AcademicCap className={styles["icon"]} />
+                    <AcademicCap className="h-5" />
                   </span>
                   <time
                     className="mb-2 block text-sm font-normal leading-none"
@@ -156,7 +128,7 @@ const ExperienceSection = () => {
                     {education.school}
                   </p>
                   <p
-                    className="mb-4 text-base font-normal"
+                    className="mb-4 text-base font-normal "
                     style={{
                       color: theme === "dark" ? "#f3f4f6" : "#6b7280",
                     }}
